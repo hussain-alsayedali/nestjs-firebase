@@ -7,20 +7,24 @@ import { FirebaseAuthGuard, RolesGuard } from './guards';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { HttpModule } from '@nestjs/axios';
 
 @Global()
 @Module({
-  imports: [PassportModule.register({ defaultStrategy: 'firebase-auth' })],
+  imports: [
+    PassportModule.register({ defaultStrategy: 'firebase-auth' }),
+    HttpModule,
+  ],
   providers: [
     FirebaseAuthStrategy,
-    {
-      provide: APP_GUARD,
-      useClass: FirebaseAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: FirebaseAuthGuard,
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
     AuthService,
   ],
   exports: [PassportModule],
