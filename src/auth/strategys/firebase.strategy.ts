@@ -29,17 +29,25 @@ export class FirebaseAuthStrategy extends PassportStrategy(
       const decodedToken = await this.firebaseService
         .getAuth()
         .verifyIdToken(token);
-      console.log(decodedToken);
-      const userRole = decodedToken.role;
-      console.log(userRole);
 
-      const user = await this.firebaseService
+      const userRole = decodedToken.role;
+
+      const userDoc = await this.firebaseService
         .getFirestore()
         .collection(userRole)
         .doc(decodedToken.uid)
         .get();
 
-      return { user: user, decodedToken: decodedToken };
+      const userData = userDoc.data();
+
+      // Combine user data and decoded token into one object
+      return {
+        uid: decodedToken.uid,
+        email: decodedToken.email,
+        role: userRole,
+        ...userData, // Include additional user data from Firestore
+        decodedToken,
+      };
     } catch (error) {
       return null;
     }

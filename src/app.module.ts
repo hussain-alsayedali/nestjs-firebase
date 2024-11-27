@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AdminModule } from './admin/admins.module';
 import { RouterModule } from '@nestjs/core';
+import { TodoModule } from './todo/todo.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ cache: true, isGlobal: true }),
@@ -20,6 +21,7 @@ import { RouterModule } from '@nestjs/core';
         module: AuthModule,
       },
     ]),
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

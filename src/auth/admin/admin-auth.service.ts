@@ -15,7 +15,6 @@ export class AdminAuthService {
   async signup(dto: SignupAdminDto) {
     const { email, password } = dto;
 
-    console.log(email, password);
     try {
       // Create the user in Firebase
       const userRecord = await this.firebaseService.getAuth().createUser({

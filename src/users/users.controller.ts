@@ -12,7 +12,6 @@ export class UsersController {
 
   @Get()
   getMe(@GetUser() user) {
-    console.log('get user decorator', user);
     return this.userService.getUsers();
   }
 }
